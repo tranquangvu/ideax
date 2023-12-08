@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   api:
-    image: 596933074874.dkr.ecr.ap-southeast-1.amazonaws.com/ideax:latest
+    image: 596933074874.dkr.ecr.ap-southeast-1.amazonaws.com/ideax:${IMAGE_TAG:-latest}
     platform: linux/amd64
     restart: always
     ports:

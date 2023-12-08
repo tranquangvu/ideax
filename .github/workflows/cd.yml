@@ -60,14 +60,8 @@ jobs:
           EB_ENV: ${{ vars.EB_ENV }}
         run: |
           sed -i -e "s/\${IMAGE_TAG:-latest}/$IMAGE_TAG/g" docker-compose.yml
-          zip -r $APP_VERSION docker-compose.yml nginx
+          zip -r $APP_VERSION docker-compose.yml nginx.conf
           aws s3 cp $APP_VERSION s3://$EB_BUCKET/$EB_APP/$APP_VERSION
           aws elasticbeanstalk create-application-version --application-name $EB_APP --version-label $APP_VERSION --source-bundle S3Bucket=$EB_BUCKET,S3Key=$EB_APP/$APP_VERSION
           aws elasticbeanstalk update-environment --application-name $EB_APP --environment-name $EB_ENV --version-label $APP_VERSION
-          (aws elasticbeanstalk wait environment-updated --application-name $EB_APP --environment-name $EB_ENV --version-label $APP_VERSION) &
-          wait_pid=$!
-          while ps -p $wait_pid > /dev/null; do
-            echo "."
-            sleep 5
-          done
-          echo "Completed deployment successfully."
+          aws elasticbeanstalk wait environment-updated --application-name $EB_APP --environment-name $EB_ENV --version-label $APP_VERSION

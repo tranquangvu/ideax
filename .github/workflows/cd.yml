@@ -5,7 +5,7 @@ on:
     workflows:
       - CI
     branches:
-      - main
+      - mainx
     types:
       - completed
 

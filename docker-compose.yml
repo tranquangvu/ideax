@@ -2,13 +2,12 @@ version: "3.8"
 
 services:
   api:
-    image: 596933074874.dkr.ecr.ap-southeast-1.amazonaws.com/ideax:${IMAGE_TAG:-latest}
+    image: 932782693588.dkr.ecr.ap-southeast-1.amazonaws.com/ideax:${IMAGE_TAG:-latest}
     platform: linux/amd64
     restart: always
     ports:
       - 3000:3000
     environment:
-      - PORT=3000
       - MONGODB_URI=${MONGODB_URI}
   nginx:
     image: nginx:alpine
